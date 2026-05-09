@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نجمة ديجيتال | قصة حب ✨</title>
+    <title>عيد ميلاد سعيد | نجمة ديجيتال ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&family=Amiri:ital,wght@1,700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             height: 100vh; overflow: hidden; 
             font-family: 'Cairo', sans-serif; transition: background 1.5s ease;
-            background-color: #fff5f7;
+            background-color: #fff9eb;
         }
 
         .container {
@@ -22,76 +22,70 @@
         .page {
             position: absolute; width: 90%; max-width: 450px;
             text-align: center; opacity: 0; visibility: hidden;
-            transform: translateY(30px); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            transform: scale(0.8); transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .page.active { opacity: 1; visibility: visible; transform: translateY(0); }
+        .page.active { opacity: 1; visibility: visible; transform: scale(1); }
 
-        /* كارت الإيموجي الفخم - نمط نجمة ديجيتال */
-        .emoji-card {
-            width: 250px; height: 250px; margin: 0 auto 25px;
-            background: #fff; border-radius: 40px;
+        /* كارت المفاجأة الأبيض */
+        .card-visual {
+            width: 260px; height: 260px; margin: 0 auto 30px;
+            background: #fff; border-radius: 50px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.12);
-            border: 5px solid #fff; position: relative;
-            font-size: 130px; /* حجم الإيموجي */
-        }
-        
-        .emoji-card::after {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(255,143,163,0.2) 0%, transparent 70%);
-            z-index: -1;
+            box-shadow: 0 20px 40px rgba(255, 193, 7, 0.15);
+            border: 6px solid #fff; position: relative;
+            font-size: 140px;
         }
 
-        h1 { font-size: 30px; color: #d63384; margin-bottom: 12px; }
-        p { font-family: 'Amiri', serif; font-size: 22px; color: #555; line-height: 1.6; margin-bottom: 30px; font-weight: bold; }
+        h1 { font-size: 32px; color: #b8860b; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
+        p { font-family: 'Amiri', serif; font-size: 24px; color: #444; line-height: 1.5; margin-bottom: 35px; padding: 0 10px; }
 
-        .btn-action {
-            background: #ff4d6d; color: white; border: none;
-            padding: 14px 45px; border-radius: 50px; font-size: 18px;
+        .btn-celebrate {
+            background: linear-gradient(45deg, #ffd700, #b8860b);
+            color: white; border: none;
+            padding: 15px 50px; border-radius: 50px; font-size: 20px;
             font-weight: 900; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
+            box-shadow: 0 10px 25px rgba(184, 134, 11, 0.3);
         }
-        .btn-action:hover { transform: scale(1.1); background: #d63384; }
+        .btn-celebrate:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(184, 134, 11, 0.4); }
 
-        .heart-rain {
+        /* تأثير البالونات والنجوم */
+        .confetti {
             position: absolute; top: -50px;
             pointer-events: none; z-index: 1;
-            animation: fallEffect linear forwards;
+            animation: fall linear forwards;
         }
-        @keyframes fallEffect { to { transform: translateY(110vh) rotate(360deg); } }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
-<body id="masterBody">
+<body>
 
     <div class="container" id="slider"></div>
 
     <script>
-        const loveStory = [
-            { t: "أنتِ استثنائية 👑", p: "في عالم مليء بالوجوه، عيناكِ هي المكان الذي أنتمي إليه.", emoji: "👸", bg: "#fff0f3", btn: "اكتشف الحكاية ✨" },
-            { t: "أجمل الذكريات 📸", p: "لم يكن مجرد لقاء، كان بداية لعمر جديد يملؤه الحب.", emoji: "📸", bg: "#f0f7ff", btn: "وبعدها؟ ❤️" },
-            { t: "سند لا يميل 💪", p: "سأكون خلفكِ جبلاً يحميكِ، ومعكِ قلباً لا يترككِ أبداً.", emoji: "🛡️", bg: "#f1f8e9", btn: "وعد الأبد 💍" },
-            { t: "أنتِ هدية السماء 🎁", p: "كل يوم معكِ هو عيد، وكل لحظة بقربكِ هي حياة.", emoji: "🎁", bg: "#fff9e6", btn: "يا روحي 🌹" },
-            { t: "المكان الآمن 🌏", p: "لا تهمني المسافات، فأنتِ تسكنين في النبضة الأقرب لقلبي.", emoji: "🌏", bg: "#e1f5fe", btn: "نهاية الحكاية ✨" },
-            { t: "شكر من القلب ❤️", p: "شكراً لأنكِ كنتِ الأجمل دائماً. أحبكِ اليوم وكل يوم.", emoji: "🥰", bg: "#ffffff", btn: "ابدأ من جديد 🔄" }
+        const bdayStory = [
+            { t: "اليوم يومك! ✨", p: "في هذا اليوم الجميل، وُلدت قطعة من السكر لتنير حياتنا.", emoji: "🎂", bg: "#fff9eb", btn: "شنو المفاجأة؟ 🎁" },
+            { t: "كل عام وأنتِ بخير 🎈", p: "أتمنى لكِ سنة تشبه طيبة قلبكِ وجمال روحكِ.", emoji: "🎁", bg: "#fef3f3", btn: "وبعد؟ ✨" },
+            { t: "سنة مليئة بالحب ❤️", p: "عسى أيامكِ كلها ضحك وفرح، وما تغيب الابتسامة عن وجهكِ.", emoji: "🕯️", bg: "#f0f4ff", btn: "أمنية غالية 🌟" },
+            { t: "أنتِ استثنائية 👑", p: "كبرتِ سنة، وكبر حبكِ في قلبي ألف سنة.. أحبكِ.", emoji: "👸", bg: "#fdf2ff", btn: "عيد ميلاد سعيد 🎊" }
         ];
 
         let cur = 0;
         const slider = document.getElementById('slider');
 
         function build() {
-            loveStory.forEach((page, i) => {
+            bdayStory.forEach((page, i) => {
                 const div = document.createElement('div');
                 div.className = `page ${i === 0 ? 'active' : ''}`;
                 div.innerHTML = `
-                    <div class="emoji-card">${page.emoji}</div>
+                    <div class="card-visual">${page.emoji}</div>
                     <h1>${page.t}</h1>
                     <p>${page.p}</p>
-                    <button class="btn-action" onclick="${i === loveStory.length - 1 ? 'location.reload()' : 'nextPage()'}">${page.btn}</button>
+                    <button class="btn-celebrate" onclick="${i === bdayStory.length - 1 ? 'location.reload()' : 'nextPage()'}">${page.btn}</button>
                 `;
                 slider.appendChild(div);
             });
-            document.body.style.backgroundColor = loveStory[0].bg;
+            document.body.style.backgroundColor = bdayStory[0].bg;
         }
 
         function nextPage() {
@@ -99,20 +93,24 @@
             pages[cur].classList.remove('active');
             cur++;
             pages[cur].classList.add('active');
-            document.body.style.backgroundColor = loveStory[cur].bg;
+            document.body.style.backgroundColor = bdayStory[cur].bg;
+            
+            // زيادة الاحتفال عند الضغط
+            for(let i=0; i<10; i++) createConfetti();
         }
 
-        setInterval(() => {
-            const h = document.createElement('div');
-            h.className = 'heart-rain';
-            h.innerHTML = ['💖', '🌸', '✨', '💎'][Math.floor(Math.random() * 4)];
-            h.style.left = Math.random() * 100 + 'vw';
-            h.style.fontSize = Math.random() * 15 + 20 + 'px';
-            h.style.animationDuration = Math.random() * 2 + 3 + 's';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 5000);
-        }, 400);
+        function createConfetti() {
+            const c = document.createElement('div');
+            c.className = 'confetti';
+            c.innerHTML = ['✨', '🎈', '🎉', '🌟', '🧁'][Math.floor(Math.random() * 5)];
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.fontSize = Math.random() * 20 + 20 + 'px';
+            c.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 5000);
+        }
 
+        setInterval(createConfetti, 500);
         build();
     </script>
 </body>
