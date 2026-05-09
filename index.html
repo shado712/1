@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عيد ميلاد سعيد | نجمة ديجيتال ✨</title>
+    <title>نجمة ديجيتال | عيد ميلاد ملكي 🌟</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&family=Amiri:ital,wght@1,700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             height: 100vh; overflow: hidden; 
             font-family: 'Cairo', sans-serif; transition: background 1.5s ease;
-            background-color: #fff9eb;
+            background-color: #fdf2ff;
         }
 
         .container {
@@ -22,35 +22,64 @@
         .page {
             position: absolute; width: 90%; max-width: 450px;
             text-align: center; opacity: 0; visibility: hidden;
-            transform: scale(0.8); transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.5) rotate(-10deg); transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .page.active { opacity: 1; visibility: visible; transform: scale(1); }
+        .page.active { opacity: 1; visibility: visible; transform: scale(1) rotate(0deg); }
 
-        /* كارت المفاجأة الأبيض */
+        /* كارت المفاجأة المطور */
         .card-visual {
-            width: 260px; height: 260px; margin: 0 auto 30px;
-            background: #fff; border-radius: 50px;
+            width: 250px; height: 250px; margin: 0 auto 25px;
+            background: #fff; border-radius: 60px;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 20px 40px rgba(255, 193, 7, 0.15);
-            border: 6px solid #fff; position: relative;
-            font-size: 140px;
+            box-shadow: 0 25px 50px rgba(184, 134, 11, 0.1);
+            border: 8px solid #fff; position: relative;
+            font-size: 130px;
         }
 
-        h1 { font-size: 32px; color: #b8860b; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
-        p { font-family: 'Amiri', serif; font-size: 24px; color: #444; line-height: 1.5; margin-bottom: 35px; padding: 0 10px; }
+        h1 { font-size: 28px; color: #b8860b; margin-bottom: 10px; }
+        p { font-family: 'Amiri', serif; font-size: 22px; color: #555; line-height: 1.4; margin-bottom: 30px; }
 
-        .btn-celebrate {
-            background: linear-gradient(45deg, #ffd700, #b8860b);
+        /* الأزرار التفاعلية بأشكال خاصة */
+        .btn-custom {
             color: white; border: none;
-            padding: 15px 50px; border-radius: 50px; font-size: 20px;
-            font-weight: 900; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 10px 25px rgba(184, 134, 11, 0.3);
+            padding: 20px 40px; font-size: 18px;
+            font-weight: 900; cursor: pointer; transition: 0.4s;
+            display: inline-block; position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
-        .btn-celebrate:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(184, 134, 11, 0.4); }
 
-        /* تأثير البالونات والنجوم */
-        .confetti {
+        /* شكل 1: شكل الغيمة الوردية */
+        .btn-cloud {
+            background: #ff8fa3;
+            border-radius: 50px 50px 50px 50px;
+            clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+        }
+
+        /* شكل 2: شكل النجمة الذهبية */
+        .btn-star {
+            background: #ffd700; color: #b8860b;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            padding: 30px 50px;
+        }
+
+        /* شكل 3: شكل الوردة أو المسنن */
+        .btn-flower {
+            background: #bc8f8f;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+
+        /* شكل 4: الزر الملكي */
+        .btn-royal {
+            background: linear-gradient(to right, #b8860b, #ffd700);
+            border-radius: 15px;
+            transform: skew(-10deg);
+        }
+
+        .btn-custom:hover { transform: scale(1.1) rotate(5deg); filter: brightness(1.1); }
+
+        /* تأثير المطر الاحتفالي */
+        .item {
             position: absolute; top: -50px;
             pointer-events: none; z-index: 1;
             animation: fall linear forwards;
@@ -64,10 +93,12 @@
 
     <script>
         const bdayStory = [
-            { t: "اليوم يومك! ✨", p: "في هذا اليوم الجميل، وُلدت قطعة من السكر لتنير حياتنا.", emoji: "🎂", bg: "#fff9eb", btn: "شنو المفاجأة؟ 🎁" },
-            { t: "كل عام وأنتِ بخير 🎈", p: "أتمنى لكِ سنة تشبه طيبة قلبكِ وجمال روحكِ.", emoji: "🎁", bg: "#fef3f3", btn: "وبعد؟ ✨" },
-            { t: "سنة مليئة بالحب ❤️", p: "عسى أيامكِ كلها ضحك وفرح، وما تغيب الابتسامة عن وجهكِ.", emoji: "🕯️", bg: "#f0f4ff", btn: "أمنية غالية 🌟" },
-            { t: "أنتِ استثنائية 👑", p: "كبرتِ سنة، وكبر حبكِ في قلبي ألف سنة.. أحبكِ.", emoji: "👸", bg: "#fdf2ff", btn: "عيد ميلاد سعيد 🎊" }
+            { t: "اليوم ميلادك! ✨", p: "في هذا اليوم الجميل، وُلدت أغلى قطعة سكر في العالم.", emoji: "🎂", bg: "#fdf2ff", btn: "افتح الهدية 🎁", style: "btn-cloud" },
+            { t: "كبرتِ سنة 🎈", p: "سنة جديدة يملؤها الفرح والضحك، يا شمعة تضوي الدرب.", emoji: "🧁", bg: "#fff9eb", btn: "أمنية غالية 🌟", style: "btn-star" },
+            { t: "يا أجمل القلوب ❤️", p: "كل عام وأنتِ بقلبي أغلى من كل الناس، أحبكِ بجنون.", emoji: "🧸", bg: "#f0f4ff", btn: "وبعد؟ ✨", style: "btn-flower" },
+            { t: "أنتِ استثنائية 👸", p: "كبرتِ سنة، وزاد الحلا بيكِ مية سنة.. يا ملكتي.", emoji: "👑", bg: "#fef3f3", btn: "مفاجأة 🎊", style: "btn-royal" },
+            { t: "سنة النجاح 🌟", p: "أتمنى لكِ في عامكِ الجديد كل النجاح وتحقيق الأحلام.", emoji: "🎓", bg: "#e8f5e9", btn: "كلمة أخيرة 💌", style: "btn-cloud" },
+            { t: "أحبكِ للأبد ❤️", p: "شكراً لأنكِ موجودة في حياتي.. كل عام وأنتِ بخير.", emoji: "🥰", bg: "#ffffff", btn: "ابدأ من جديد 🔄", style: "btn-royal" }
         ];
 
         let cur = 0;
@@ -81,7 +112,7 @@
                     <div class="card-visual">${page.emoji}</div>
                     <h1>${page.t}</h1>
                     <p>${page.p}</p>
-                    <button class="btn-celebrate" onclick="${i === bdayStory.length - 1 ? 'location.reload()' : 'nextPage()'}">${page.btn}</button>
+                    <button class="btn-custom ${page.style}" onclick="${i === bdayStory.length - 1 ? 'location.reload()' : 'nextPage()'}">${page.btn}</button>
                 `;
                 slider.appendChild(div);
             });
@@ -93,16 +124,16 @@
             pages[cur].classList.remove('active');
             cur++;
             pages[cur].classList.add('active');
-            document.body.style.backgroundColor = bdayStory[cur].bg;
+            document.body.style.backgroundColor = loveStory[cur]?.bg || bdayStory[cur].bg;
             
-            // زيادة الاحتفال عند الضغط
-            for(let i=0; i<10; i++) createConfetti();
+            // دفع انفجار احتفالي
+            for(let i=0; i<15; i++) createItem();
         }
 
-        function createConfetti() {
+        function createItem() {
             const c = document.createElement('div');
-            c.className = 'confetti';
-            c.innerHTML = ['✨', '🎈', '🎉', '🌟', '🧁'][Math.floor(Math.random() * 5)];
+            c.className = 'item';
+            c.innerHTML = ['✨', '🎈', '🎉', '🌟', '🧁', '👑'][Math.floor(Math.random() * 6)];
             c.style.left = Math.random() * 100 + 'vw';
             c.style.fontSize = Math.random() * 20 + 20 + 'px';
             c.style.animationDuration = Math.random() * 3 + 2 + 's';
@@ -110,7 +141,7 @@
             setTimeout(() => c.remove(), 5000);
         }
 
-        setInterval(createConfetti, 500);
+        setInterval(createItem, 400);
         build();
     </script>
 </body>
