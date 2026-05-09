@@ -3,99 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشروع حيدر للبطاقات الرقمية ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;900&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+    <title>قصة حب لا تنتهي ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@900&family=Amiri:ital,wght@1,700&display=swap" rel="stylesheet">
     <style>
-        :root { --main: #ff4d6d; --accent: #7209b7; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            height: 100vh; overflow: hidden; 
+            font-family: 'Cairo', sans-serif; transition: background 1.5s ease;
+            background-color: #fff5f7;
+        }
 
-        body {
-            height: 100vh; overflow: hidden;
-            font-family: 'Cairo', sans-serif;
-            background: #0a0a0a; /* خلفية سوداء فخمة لعرض الألوان */
+        .container {
+            height: 100vh; width: 100%; display: flex;
+            align-items: center; justify-content: center; position: relative;
+            z-index: 10;
+        }
+
+        .page {
+            position: absolute; width: 90%; max-width: 450px;
+            text-align: center; opacity: 0; visibility: hidden;
+            transform: translateY(30px); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+        }
+
+        .page.active { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        /* كارت الصور - نمط مشروع حيدر الفخم */
+        .img-card {
+            width: 250px; height: 250px; margin: 0 auto 25px;
+            background: #fff; border-radius: 40px;
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 15px 35px rgba(214, 51, 132, 0.12);
+            border: 4px solid #fff; position: relative;
         }
+        .img-card img { width: 80%; height: 80%; object-fit: contain; }
 
-        /* حاوية العرض */
-        .showcase {
-            width: 90%; max-width: 400px; height: 80vh;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; color: white; padding: 20px;
+        h1 { font-size: 30px; color: #d63384; margin-bottom: 12px; }
+        p { font-family: 'Amiri', serif; font-size: 22px; color: #555; line-height: 1.6; margin-bottom: 30px; }
+
+        /* زر العرض التجاري */
+        .btn-action {
+            background: #ff4d6d; color: white; border: none;
+            padding: 14px 45px; border-radius: 50px; font-size: 18px;
+            font-weight: 900; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
         }
+        .btn-action:hover { transform: scale(1.1); background: #d63384; }
 
-        /* الدوائر الملونة في الخلفية */
-        .blob {
-            position: absolute; width: 200px; height: 200px;
-            background: var(--main); border-radius: 50%;
-            filter: blur(60px); z-index: -1; animation: move 10s infinite alternate;
+        /* مطر القلوب */
+        .heart-rain {
+            position: absolute; top: -50px;
+            pointer-events: none; z-index: 1;
+            animation: fallEffect linear forwards;
         }
-        @keyframes move { from { transform: translate(-50%, -50%); } to { transform: translate(50%, 50%); } }
-
-        .icon-box { font-size: 80px; margin-bottom: 20px; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-
-        h1 { font-family: 'Aref Ruqaa', serif; font-size: 35px; color: var(--main); margin-bottom: 15px; }
-        p { font-size: 18px; line-height: 1.6; opacity: 0.8; margin-bottom: 30px; }
-
-        .cta-btn {
-            background: var(--main); color: white; border: none;
-            padding: 15px 40px; border-radius: 50px; font-weight: 900;
-            font-size: 20px; cursor: pointer; transition: 0.4s;
-            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.4);
-        }
-        .cta-btn:hover { transform: scale(1.1); letter-spacing: 1px; }
-
-        /* تذييل الصفحة باسمك */
-        .footer { position: absolute; bottom: 20px; font-size: 14px; opacity: 0.5; }
-
-        /* جزيئات طائرة */
-        .sparkle { position: absolute; background: white; border-radius: 50%; pointer-events: none; }
+        @keyframes fallEffect { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
-<body>
+<body id="masterBody">
 
-    <div class="blob"></div>
-
-    <div class="showcase">
-        <div class="icon-box">🎁</div>
-        <h1>بطاقتك الرقمية الأولى</h1>
-        <p>حوّل مشاعرك، ذكرياتك، واحتفالاتك إلى رابط (Link) فخم يدوم للأبد. بأسلوب ملكي وتصميم عصري.</p>
-        
-        <button class="cta-btn" onclick="startShow()">ابدأ التجربة ✨</button>
-
-        <div class="footer">صمم بواسطة حيدر | 2026</div>
-    </div>
+    <div class="container" id="slider"></div>
 
     <script>
-        function startShow() {
-            // هنا نضع الأكشن الذي سيحدث عند الضغط، مثلاً تحويل لصفحة ثانية أو رسالة
-            const btn = document.querySelector('.cta-btn');
-            btn.innerHTML = "قريباً.. 🔥";
-            btn.style.background = "#7209b7";
-            
-            setTimeout(() => {
-                alert("أهلاً بك في مشروعنا! قريباً سنطلق مجموعة من القوالب الملكية.");
-            }, 500);
+        const loveStory = [
+            { t: "أنتِ استثنائية 👑", p: "في عالم مليء بالوجوه، عيناكِ هي المكان الذي أنتمي إليه.", img: "https://i.ibb.co/L8G3w5g/cake-crown.png", bg: "#fff0f3", btn: "اكتشف الحكاية ✨" },
+            { t: "صدفة خير من ألف ميعاد 📸", p: "لم يكن مجرد لقاء، كان بداية لعمر جديد يملؤه الحب.", img: "https://i.ibb.co/mDk3hCg/camera-heart.png", bg: "#f0f7ff", btn: "وبعدها؟ ❤️" },
+            { t: "سند لا يميل 💪", p: "سأكون خلفكِ جبلاً يحميكِ، ومعكِ قلباً لا يترككِ أبداً.", img: "https://i.ibb.co/yS5k1B9/shield-heart.png", bg: "#f1f8e9", btn: "وعد للابد 💍" },
+            { t: "أنتِ هدية السماء 🎁", p: "كل يوم معكِ هو عيد، وكل لحظة بقربكِ هي حياة.", img: "https://i.ibb.co/jH6b0bQ/gift-crown.png", bg: "#fff9e6", btn: "يا عمري 🌹" },
+            { t: "المكان الآمن 🌏", p: "لا تهمني المسافات، فأنتِ تسكنين في النبضة الأقرب لقلبي.", img: "https://i.ibb.co/3W4T5gW/map-heart.png", bg: "#e1f5fe", btn: "نهاية الحكاية ✨" },
+            { t: "شكر من القلب ❤️", p: "شكراً لأنكِ كنتِ الأجمل دائماً. أحبكِ اليوم وكل يوم.", img: "https://i.ibb.co/X8Y5G2q/teddy-bear.png", bg: "#ffffff", btn: "ابدأ من جديد 🔄" }
+        ];
+
+        let cur = 0;
+        const slider = document.getElementById('slider');
+
+        function build() {
+            loveStory.forEach((page, i) => {
+                const div = document.createElement('div');
+                div.className = `page ${i === 0 ? 'active' : ''}`;
+                div.innerHTML = `
+                    <div class="img-card"><img src="${page.img}"></div>
+                    <h1>${page.t}</h1>
+                    <p>${page.p}</p>
+                    <button class="btn-action" onclick="${i === loveStory.length - 1 ? 'location.reload()' : 'nextPage()'}">${page.btn}</button>
+                `;
+                slider.appendChild(div);
+            });
+            document.body.style.backgroundColor = loveStory[0].bg;
         }
 
-        // إنشاء جزيئات النجوم في الخلفية
-        function createSparkle() {
-            const s = document.createElement('div');
-            s.className = 'sparkle';
-            const size = Math.random() * 4 + 'px';
-            s.style.width = size; s.style.height = size;
-            s.style.left = Math.random() * 100 + 'vw';
-            s.style.top = Math.random() * 100 + 'vh';
-            s.style.opacity = Math.random();
-            document.body.appendChild(s);
-            
-            setTimeout(() => s.remove(), 3000);
+        function nextPage() {
+            const pages = document.querySelectorAll('.page');
+            pages[cur].classList.remove('active');
+            cur++;
+            pages[cur].classList.add('active');
+            document.body.style.backgroundColor = loveStory[cur].bg;
         }
-        setInterval(createSparkle, 100);
+
+        setInterval(() => {
+            const h = document.createElement('div');
+            h.className = 'heart-rain';
+            h.innerHTML = ['💖', '🌸', '✨', '💎'][Math.floor(Math.random() * 4)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = Math.random() * 15 + 20 + 'px';
+            h.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }, 400);
+
+        build();
     </script>
 </body>
 </html>
